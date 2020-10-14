@@ -94,11 +94,6 @@ for s = 1:size(rho.r,2)
 end
 legend(legend_input{:});    
 
-%% Residual error vs r*tau
-params = 'stimtype';
-plt = 1;
-[coef_r,coef_th,rho_r,rho_th,pval_r,pval_th,Rsq_r,Rsq_th] = ResErr_rXtau_regress(subject,params,plt);
-
 %% Partial correlations
 full_model = 1;         int = 0;
 params = 'stimtype';    plt = 0;
@@ -241,6 +236,7 @@ r_res = cellfun(@(x,y) x - y, pred_sub.static.r, exp_sub.r,'uniformoutput',false
 th_res = cellfun(@(x,y) sign(y).*(x - y), pred_sub.static.th, exp_sub.th,'uniformoutput',false);
 [rho.static.r, pval.static.r] = cellfun(@(x,y) corr(x(:),y(:)),tau,r_res); % make sure they're columns
 [rho.static.th, pval.static.th] = cellfun(@(x,y) corr(x(:),y(:)),tau,th_res);
+
 CompareTauCorr(rho.data,rho.static); % Actual vs Subjective Correlations
 
 % Dynamic Prior model 
