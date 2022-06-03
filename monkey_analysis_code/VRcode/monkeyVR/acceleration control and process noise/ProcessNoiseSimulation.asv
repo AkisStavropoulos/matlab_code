@@ -1,0 +1,46 @@
+%% ProcessNoiseSimulation
+rng(0)
+
+%% generate target positions
+N = 1000;
+
+% target position
+r_tar = 100 + 300*rand(1,N);
+th_tar = 60*rand(1,N) - 30;
+
+% Control Dynamics Parameters
+x = 250;
+theta = 60;
+T = 2;
+tau = .3;
+
+% Process Noise parameters
+noiseTau = 0.25;
+linGain = 2;
+angGain = 2;
+
+for n = 1:N
+
+[x_tar,y_tar] = polar2cartY(r_tar(n),th_tar(n));
+
+[finalPosX, finalPosY, finalPosPhi, cleanPosX, cleanPosY, cleanPosPhi, finalLinVel, finalAngVel, cleanLinVel, cleanAngVel, linEta, angEta, ProcessNoiseMag, jsx, jsy, ts] = ...
+    simulate_trajectory(x_tar,y_tar,x,theta,T,tau,noiseTau,linGain,angGain);
+
+subplot(2,4,1);hold on; plot(x_tar,y_tar,'go','markersize',7,'markerfacecolor','g')
+suptitle(['tau=' num2str(tau) ', noiseTau=' num2str(noiseTau) ', G_{lin}=' num2str(linGain) ', G_{ang}=' num2str(angGain)]);
+
+
+
+if numel(tau) > 1
+vmax = findvmax(x,T,tau);
+noisevar(k) = std((finalLinVel - cleanLinVel)/vmax);
+PNmag(k) = max(ProcessNoiseMag);
+
+subplot(2,4,4); hold on;
+plot(taus,noisevar);xlabel('tau [s]');ylabel('noise variability');title('noise variability dependence on tau');
+
+subplot(2,4,8); hold on;
+plot(taus,PNmag);xlabel('tau [s]');ylabel('noise magnitude');title('noise magnitude dependence on tau');
+end
+
+end

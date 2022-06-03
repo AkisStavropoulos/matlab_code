@@ -1,0 +1,22 @@
+ImportSMR*
+NPMK*
+PlexonMatlab\*
+chronux_2_12\*
+nonparametric-regression\*
+npy-matlab\*
+.DS_Store
+catstruct\*
+PlexonMatlab/*
+chronux_2_12/*
+nonparametric-regression/*
+npy-matlab/*
+catstruct/*
+*/firefly_monkey/.git/*
+*genpath2/*
+*\firefly_monkey\.git\*
+Matlab Offline Files SDK/*
+Matlab Offline Files SDK\*
+*\firefly_monkey\chronux_2_12\*
+*/firefly_monkey/chronux_2_12/*
+*.mat
+*.npy
